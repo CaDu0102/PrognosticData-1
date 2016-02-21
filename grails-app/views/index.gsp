@@ -104,6 +104,8 @@
 		</div>
 		<div id="page-body" role="main">
 			<h1>Welcome to Grails</h1>
+            <h1>&nbsp;Bem Vindo ao CarStolen &nbsp;(${session.usuario?.nome})&nbsp;(${session.usuario?.cargo})<!-- //Mostra o nome do usuario -->
+            &nbsp;<g:link controller="usuario" action="paginaLogin">Sair!</g:link> <!-- //botao de logoff --></h1>
 			<p>Congratulations, you have successfully started your first Grails application! At the moment
 			   this is the default page, feel free to modify it to either redirect to a controller or display whatever
 			   content you may choose. Below is a list of controllers that are currently deployed in this application,

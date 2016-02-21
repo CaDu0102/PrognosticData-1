@@ -10,6 +10,41 @@ class UsuarioController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+//------------------------------------------------------------------------------------------
+
+    //pagina que chama o logar
+    def paginaLogin(){
+        render(view: 'login')
+
+    }
+
+// Controle de Logar
+    def logar(Usuario usuarioInstance){
+
+        // Logando com  criptografia MD5 na senha
+        def usuario = Usuario.findByUsuarioAndSenha(usuarioInstance.usuario,usuarioInstance.senha/*.encodeAsMD5()*/)
+        // policial.senha = policial.senha.encodeAsMD5()
+
+        if(usuario){
+            session.usuario = usuario // abrindo sessao quando o usuario consegue logar
+            render(view: '/index')    //consegue ir para index
+        }else {
+            flash.error = "Senha / Usuário são imcompatíveis ou invalidas"
+            render(view: 'login')     //volta para a mesma paginda de logar (mudado)
+        }
+    }
+
+
+//Encerra a sessão
+    def sair(){
+
+        session.usuario = null
+        redirect(action: 'paginaLogin')
+
+    }
+
+//------------------------------------------------------------------------------------------
+
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Usuario.list(params), model:[usuarioInstanceCount: Usuario.count()]
